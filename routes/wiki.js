@@ -11,10 +11,14 @@ router.get('/', function(req, res, next) {
 router.post('/add', function(req, res, next) {
   if(!req.body) return res.sendStatus(400);
   console.log(Object.keys(req.body));
-  res.json(req.body);//res.json sets headers?
-
-  // res.redirect('/');
-  // //this tries to change the headers, for which we get an error: Can't set headers after they are sent
+  var page = Page.build({
+    title: req.body.title,
+    content: req.body.content
+  })
+  page.save()
+  .then(function() {
+    res.redirect('/')
+  });
   // next();
 });
 
